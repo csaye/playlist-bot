@@ -1,23 +1,37 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Spotify from './Spotify';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <section>
+        { Spotify.getAccessToken() && <Page /> }
+      </section>
+    </div>
+  );
+}
+
+function Page() {
+
+  let [tracks, setTracks] = useState([]);
+
+  function search() {
+    Spotify.search('the', 'chill').then(result => {
+      setTracks(result);
+    });
+  }
+
+  return (
+    <div>
+      <button onClick={search}>Search</button>
+      {
+        tracks?.map(t => (
+          <div key={t.id}>
+            <p>{t.name}</p>
+          </div>
+        ))
+      }
     </div>
   );
 }
