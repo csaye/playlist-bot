@@ -1,5 +1,10 @@
 button {
   cursor: pointer;
+  background-color: #efefef;
+}
+
+button:hover {
+  background-color: #e1e1e1;
 }
 
 button, select, input {
@@ -87,7 +92,7 @@ html, body {
 
 .Page .listing .saveTrack input {
   height: 24px;
-  margin-right: 10px;
+  margin-right: 6px;
 }
 
 .Page .listing .saveTrack button {
