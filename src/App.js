@@ -13,22 +13,27 @@ function App() {
 }
 
 function Page() {
-
   let [tracks, setTracks] = useState([]);
+  let [title, setTitle] = useState('');
 
-  function search() {
-    Spotify.search('the', 'chill').then(result => {
+  const search = async(e) => {
+    e.preventDefault();
+    Spotify.search(title, 'chill', 10, '1000-3000').then(result => {
+      if (result.length == 0) window.alert('No tracks found');
       setTracks(result);
     });
   }
 
   return (
     <div>
-      <button onClick={search}>Search</button>
+      <form onSubmit={search}>
+        <input value={title} placeholder="Title" maxLength="64" onChange={(e) => setTitle(e.target.value)} required />
+        <button type="submit">Search</button>
+      </form>
       {
         tracks?.map(t => (
           <div key={t.id}>
-            <p>{t.name}</p>
+            <p>{t.name} | {t.artist} | {t.album}</p>
           </div>
         ))
       }

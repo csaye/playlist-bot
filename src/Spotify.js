@@ -23,14 +23,14 @@ const Spotify = {
     }
   },
 
-  search(term, genre) {
+  search(term, genre, limit, year) {
     const data = {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${userAccessToken}`
       }
     };
-    const url = `https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?type=track&q=${term} genre:"${genre}"`;
+    const url = `https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?type=track&limit=${limit}&q=${term} year:${year} genre:"${genre}"`;
     return fetch(url, data).then(response => {
       if (response.ok) {
         return response.json();
