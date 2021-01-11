@@ -120,16 +120,9 @@ function Page() {
         / >
         <label htmlFor="range-limit">Track Count</label>
 
-        <button type="submit">Search</button>
+        <button type="submit">Generate Playlist</button>
       </form>
       <div>
-        {
-          tracks.map(t => (
-            <div key={t.id}>
-              <p>{t.name} | {t.artist} | {t.album}</p>
-            </div>
-          ))
-        }
         { tracks.length > 0 &&
           <div>
             <input
@@ -141,7 +134,23 @@ function Page() {
             <button onClick={savePlaylist}>Save Playlist</button>
           </div>
         }
+        {
+          tracks.map(t => <Track key={t.id} message={t} />)
+        }
       </div>
+    </div>
+  );
+}
+
+function Track(props) {
+  const { name, artist, album, image, url } = props.message;
+
+  return (
+    <div className="Track">
+      <a href={url}>
+        <img src={image} alt={album} />
+        <p>{name} <b>|</b> {artist} | {album}</p>
+      </a>
     </div>
   );
 }
