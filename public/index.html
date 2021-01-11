@@ -41,4 +41,21 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    const loadingTexts = ['Loading.', 'Loading..', 'Loading...', 'Loading...'];
+    let index = 0;
+
+    function changeLoadingText() {
+      let text = document.getElementById('loadingText');
+      if (!text) return;
+      text.innerHTML = loadingTexts[index];
+      if (index >= loadingTexts.length - 1) {
+        index = 0;
+      } else {
+        index += 1;
+      }
+    }
+
+    setInterval(changeLoadingText, 500);
+  </script>
 </html>

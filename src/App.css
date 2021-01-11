@@ -2,13 +2,23 @@ button {
   cursor: pointer;
 }
 
+button, select, input {
+  border-radius: 5px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  /* background-color: #efefef; */
+}
+
 /* App */
 
 .App header {
   position: sticky;
   top: 0;
   width: 100%;
-  background-color: #2196f3;
+  background-color: #555;
   align-items: center;
   height: 60px;
 }
@@ -16,12 +26,73 @@ button {
 .App header h1 {
   font-size: 36px;
   padding: 10px;
+  color: #efefef;
 }
 
 /* Page */
 
-.Page {
-  padding: 20px;
+.Page .sidebar {
+  padding: 15px;
+  background-color: #999;
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  float: left;
+  top: 60px;
+}
+
+.Page form {
+  display: flex;
+  flex-direction: column;
+}
+
+.Page form label {
+  margin-top: 15px;
+}
+
+.Page form .textInput {
+  height: 24px;
+  font-size: 16px;
+}
+
+.Page form .firstElem {
+  margin-bottom: 2px;
+}
+
+.Page form select {
+  height: 30px;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.Page form button {
+  margin-top: 15px;
+  height: 60px;
+  font-size: 24px;
+}
+
+/* Page listing */
+
+.Page .listing {
+  margin: 15px 15px 15px 345px;
+}
+
+.Page .listing .loadingText {
+  font-size: 24px;
+}
+
+.Page .listing .saveTrack {
+  margin-bottom: 15px;
+}
+
+.Page .listing .saveTrack input {
+  height: 24px;
+  margin-right: 10px;
+}
+
+.Page .listing .saveTrack button {
+  height: 30px;
+  font-size: 16px;
 }
 
 /* Track */
@@ -50,6 +121,10 @@ button {
   border-radius: 5px;
 }
 
-.Track p {
+.Track h1 {
+  font-size: 24px;
+}
+
+.Track .text {
   margin: auto 10px;
 }
