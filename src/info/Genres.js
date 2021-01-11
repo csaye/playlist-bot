@@ -1,6 +1,5 @@
 export const genres = [
-  'any',
-  'ambient',
+  'any genre',
   'blues',
   'chill',
   'classical',
@@ -8,7 +7,7 @@ export const genres = [
   'country',
   'dance',
   'disco',
-  'drum-and-bass',
+  'drum and bass',
   'dubstep',
   'edm',
   'electronic',

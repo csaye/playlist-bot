@@ -5,6 +5,11 @@ import { genres } from './info/Genres';
 
 const minimumYear = 1960;
 
+// returns a random value between min and max, both inclusive
+const random = (min, max) => {
+  return Math.floor(Math.random() * ((max + 1) - min) + min);
+}
+
 function App() {
   return (
     <div className="App">
@@ -21,6 +26,7 @@ function Page() {
   let [genre, setGenre] = useState(genres[0]);
   let [minYear, setMinYear] = useState(minimumYear);
   let [maxYear, setMaxYear] = useState(currentYear());
+  let [limit, setLimit] = useState(15);
 
   function currentYear() {
     let d = new Date();
@@ -29,8 +35,10 @@ function Page() {
 
   async function search(e) {
     e.preventDefault();
-    let g = genre === 'any' ? '' : genre;
-    Spotify.search(title, g, 10, `${minYear}-${maxYear}`).then(result => {
+    let g = genre === 'any genre' ? '' : genre;
+    let years = `${minYear}-${maxYear}`;
+    let offset = random(0, 1000);
+    Spotify.search(title, g, limit, years, offset).then(result => {
       if (result.length === 0) alert('No tracks found');
       setTracks(result);
     });
@@ -47,23 +55,23 @@ function Page() {
   function setMinYearLabel(e) {
     setMinYear(e.target.value);
     let l = document.getElementById('minYearLabel');
-    if (l) {
-      l.innerHTML = e.target.value;
-    }
+    if (l) { l.innerHTML = e.target.value; }
   }
-
   function setMaxYearLabel(e) {
     setMaxYear(e.target.value);
     let l = document.getElementById('maxYearLabel');
-    if (l) {
-      l.innerHTML = e.target.value;
-    }
+    if (l) { l.innerHTML = e.target.value; }
+  }
+  function setLimitLabel(e) {
+    setLimit(e.target.value);
+    let l = document.getElementById('limitLabel');
+    if (l) { l.innerHTML = e.target.value; }
   }
 
   return (
     <div>
       <form onSubmit={search}>
-        <input value={title} placeholder="Title" maxLength="64" onChange={(e) => setTitle(e.target.value)} />
+        <input value={title} placeholder="keyword(s) – optional" maxLength="64" onChange={(e) => setTitle(e.target.value)} />
 
         <select value={genre} onChange={(e) => setGenre(e.target.value)}>
           {
@@ -92,6 +100,16 @@ function Page() {
         onChange={setMaxYearLabel}
         / >
         <label htmlFor="range-maxyear">Max Year</label>
+
+        <p id="limitLabel">{limit}</p>
+        <input
+        id="range-limit"
+        type="range"
+        min="1" max="30" defaultValue="15"
+        step="1"
+        onChange={setLimitLabel}
+        / >
+        <label htmlFor="range-limit">Track Count</label>
 
         <button type="submit">Search</button>
       </form>
