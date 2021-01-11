@@ -4,10 +4,11 @@ import Spotify from './Spotify';
 import { genres } from './info/Genres';
 
 const minimumYear = 1960;
+const maxOffset = 1000;
 
-// returns a random value between min and max, both inclusive
-const random = (min, max) => {
-  return Math.floor(Math.random() * ((max + 1) - min) + min);
+// returns a random value between min and max (min inclusive, max exclusive)
+const randomRange = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
 function App() {
@@ -27,6 +28,7 @@ function Page() {
   let [minYear, setMinYear] = useState(minimumYear);
   let [maxYear, setMaxYear] = useState(currentYear());
   let [limit, setLimit] = useState(15);
+  let [playlistName, setPlaylistName] = useState('');
 
   function currentYear() {
     let d = new Date();
@@ -37,7 +39,7 @@ function Page() {
     e.preventDefault();
     let g = genre === 'any genre' ? '' : genre;
     let years = `${minYear}-${maxYear}`;
-    let offset = random(0, 1000);
+    let offset = randomRange(0, maxOffset);
     Spotify.search(title, g, limit, years, offset).then(result => {
       if (result.length === 0) alert('No tracks found');
       setTracks(result);
@@ -48,8 +50,9 @@ function Page() {
     let trackURIs = tracks.map(t => {
       return t.uri;
     });
-    Spotify.savePlaylist('Bot Playlist', trackURIs);
-    alert('Playlist saved successfully');
+    let pName = playlistName ? playlistName : 'New Playlist';
+    Spotify.savePlaylist(pName, trackURIs);
+    alert(`Playlist "${pName}" saved successfully`);
   }
 
   function setMinYearLabel(e) {
@@ -121,7 +124,17 @@ function Page() {
             </div>
           ))
         }
-        { tracks.length > 0 && <button onClick={savePlaylist}>Save Playlist</button> }
+        { tracks.length > 0 &&
+          <div>
+            <input
+            value={playlistName}
+            placeholder="playlist name"
+            maxLength="64"
+            onChange={(e) => setPlaylistName(e.target.value)}
+            />
+            <button onClick={savePlaylist}>Save Playlist</button>
+          </div>
+        }
       </div>
     </div>
   );
