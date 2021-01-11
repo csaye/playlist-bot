@@ -24,6 +24,7 @@ export const genres = [
   'party',
   'piano',
   'pop',
+  'rap',
   'r-n-b',
   'reggaeton',
   'rock',

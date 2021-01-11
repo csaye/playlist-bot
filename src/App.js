@@ -14,6 +14,9 @@ const randomRange = (min, max) => {
 function App() {
   return (
     <div className="App">
+      <header>
+        <h1>Playlist Bot</h1>
+      </header>
       <section>
         { Spotify.getAccessToken() && <Page /> }
       </section>
@@ -23,7 +26,8 @@ function App() {
 
 function Page() {
   let [tracks, setTracks] = useState([]);
-  let [title, setTitle] = useState('');
+  let [terms, setTerms] = useState('');
+  let [notTerms, setNotTerms] = useState('');
   let [genre, setGenre] = useState(genres[0]);
   let [minYear, setMinYear] = useState(minimumYear);
   let [maxYear, setMaxYear] = useState(currentYear());
@@ -40,7 +44,8 @@ function Page() {
     let g = genre === 'any genre' ? '' : genre;
     let years = `${minYear}-${maxYear}`;
     let offset = randomRange(0, maxOffset);
-    Spotify.search(title, g, limit, years, offset).then(result => {
+    let notT = notTerms ? ` NOT ${notTerms}` : '';
+    Spotify.search(terms, notT, g, limit, years, offset).then(result => {
       if (result.length === 0) alert('No tracks found');
       setTracks(result);
     });
@@ -72,9 +77,10 @@ function Page() {
   }
 
   return (
-    <div>
+    <div className="Page">
       <form onSubmit={search}>
-        <input value={title} placeholder="keyword(s) – optional" maxLength="64" onChange={(e) => setTitle(e.target.value)} />
+        <input value={terms} placeholder="keyword(s)" maxLength="64" onChange={(e) => setTerms(e.target.value)} />
+        <input value={notTerms} placeholder="excluded keyword(s)" maxLength="64" onChange={(e) => setNotTerms(e.target.value)} />
 
         <select value={genre} onChange={(e) => setGenre(e.target.value)}>
           {
