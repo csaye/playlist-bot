@@ -1,7 +1,7 @@
 let userAccessToken;
 let expiresIn;
 const clientID = 'ec09509ab68c41f2a83b66cd2f254ca2';
-const redirectURI = 'http://localhost:3000/';
+const redirectURI = 'https://cooper.computer/playlist-bot/';
 
 const Spotify = {
   getAccessToken() {

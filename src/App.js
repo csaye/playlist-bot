@@ -67,22 +67,6 @@ function Page() {
     alert(`Playlist "${pName}" saved successfully`);
   }
 
-  function setMinYearLabel(e) {
-    setMinYear(e.target.value);
-    let l = document.getElementById('minYearLabel');
-    if (l) { l.innerHTML = "Min Year: " + e.target.value; }
-  }
-  function setMaxYearLabel(e) {
-    setMaxYear(e.target.value);
-    let l = document.getElementById('maxYearLabel');
-    if (l) { l.innerHTML = "Max Year: " + e.target.value; }
-  }
-  function setLimitLabel(e) {
-    setLimit(e.target.value);
-    let l = document.getElementById('limitLabel');
-    if (l) { l.innerHTML = "Track Count: " + e.target.value; }
-  }
-
   return (
     <div className="Page">
       <div className="sidebar">
@@ -98,31 +82,31 @@ function Page() {
             }
           </select>
 
-          <label htmlFor="range-minyear" id="minYearLabel">Min Year: {minYear}</label>
+          <label htmlFor="range-minyear">Min Year: {minYear}</label>
           <input
           id="range-minyear"
           type="range"
           min={minimumYear} max={currentYear()} defaultValue={minYear}
           step="1"
-          onChange={setMinYearLabel}
+          onChange={(e) => setMinYear(e.target.value)}
           / >
 
-          <label htmlFor="range-maxyear" id="maxYearLabel">Max Year: {currentYear()}</label>
+          <label htmlFor="range-maxyear">Max Year: {maxYear}</label>
           <input
           id="range-maxyear"
           type="range"
           min={minimumYear} max={currentYear()} defaultValue={currentYear()}
           step="1"
-          onChange={setMaxYearLabel}
+          onChange={(e) => setMaxYear(e.target.value)}
           / >
 
-          <label htmlFor="range-limit" id="limitLabel">Track Count: 15</label>
+          <label htmlFor="range-limit">Track Count: {limit}</label>
           <input
           id="range-limit"
           type="range"
           min="1" max="30" defaultValue="15"
           step="1"
-          onChange={setLimitLabel}
+          onChange={(e) => setLimit(e.target.value)}
           / >
 
           <button type="submit">Generate Playlist</button>

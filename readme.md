@@ -1,6 +1,6 @@
 # Playlist Bot
 
-Randomly generates Spotify playlists.
+Randomly generate Spotify playlists. Try it here: [cooper.computer/playlist-bot](https://cooper.computer/playlist-bot)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
