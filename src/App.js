@@ -4,7 +4,7 @@ import Spotify from './Spotify';
 import { genres } from './info/Genres';
 
 const minimumYear = 1960;
-const maxOffset = 1000;
+const maxOffset = 512;
 
 // returns a random value between min and max (min inclusive, max exclusive)
 const randomRange = (min, max) => {
@@ -43,16 +43,33 @@ function Page() {
 
   async function search(e) {
     e.preventDefault();
+
+    if (minYear > maxYear) {
+      alert('Please enter a valid year range.');
+      return;
+    }
+
     setLoading(true);
     setPlaylistName('');
 
     let g = genre === 'any genre' ? '' : genre;
     let years = `${minYear}-${maxYear}`;
-    let offset = randomRange(0, maxOffset);
     let notT = notTerms ? ` NOT ${notTerms}` : '';
 
+    // calculate offset based on search specificity
+    let mOffset = maxOffset;
+    if (g !== '') mOffset /= 2; // if genre specified, reduce offset
+    if (maxYear - minYear < 20) mOffset /= 2; // if small year range, reduce offset
+    if (terms !== '') mOffset /= 4; // if terms specified, reduce offset
+    let offset = randomRange(0, mOffset);
+
+    // console.log('calculated a max offset of ' + mOffset);
+    // console.log('calculated an offset of ' + offset);
+
     Spotify.search(terms, notT, g, limit, years, offset).then(result => {
-      if (result.length === 0) alert('No tracks found');
+      if (result.length === 0) {
+        alert('No tracks found. Please broaden your search scope.');
+      }
       setLoading(false);
       setTracks(result);
     });
@@ -140,7 +157,7 @@ function Track(props) {
 
   return (
     <div className="Track">
-      <a href={url}>
+      <a href={url} target="_blank" rel="noreferrer">
         <img src={image} alt={album} />
         <div className="text">
           <h1>{name}</h1>

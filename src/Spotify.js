@@ -30,7 +30,7 @@ const Spotify = {
         Authorization: `Bearer ${userAccessToken}`
       }
     };
-    const url = `https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?type=track&offset=${offset}&limit=${limit}&q=${terms}${notTerms} year:${years} genre:"${genre}"`;
+    const url = `https://api.spotify.com/v1/search?type=track&offset=${offset}&limit=${limit}&q=${terms}${notTerms} year:${years} genre:"${genre}"`;
     return fetch(url, data).then(response => {
       if (response.ok) {
         return response.json();
@@ -49,8 +49,8 @@ const Spotify = {
           preview: track.preview_url
         }));
       }
-      console.log('no tracks found');
-      console.log(jsonResponse);
+      // console.log('no tracks found');
+      // console.log(jsonResponse);
       return [];
     });
   },
