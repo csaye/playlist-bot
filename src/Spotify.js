@@ -1,7 +1,7 @@
 let userAccessToken;
 let expiresIn;
 const clientID = 'ec09509ab68c41f2a83b66cd2f254ca2';
-const redirectURI = 'https://cooper.computer/playlist-bot/';
+const redirectURI = 'https://csaye.com/playlist-bot/';
 
 const Spotify = {
   getAccessToken() {
@@ -49,8 +49,6 @@ const Spotify = {
           preview: track.preview_url
         }));
       }
-      // console.log('no tracks found');
-      // console.log(jsonResponse);
       return [];
     });
   },
@@ -65,7 +63,7 @@ const Spotify = {
     };
     let userID;
     let playlistID;
-    return fetch('https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/me', {
+    return fetch('https://https://api.spotify.com/v1/me', {
       method: 'GET',
       headers: headers
     }).then(response => {

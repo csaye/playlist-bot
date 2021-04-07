@@ -63,9 +63,6 @@ function Page() {
     if (terms !== '') mOffset /= 4; // if terms specified, reduce offset
     let offset = randomRange(0, mOffset);
 
-    // console.log('calculated a max offset of ' + mOffset);
-    // console.log('calculated an offset of ' + offset);
-
     Spotify.search(terms, notT, g, limit, years, offset).then(result => {
       if (result.length === 0) {
         alert('No tracks found. Please broaden your search scope.');
