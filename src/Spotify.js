@@ -63,7 +63,7 @@ const Spotify = {
     };
     let userID;
     let playlistID;
-    return fetch('https://https://api.spotify.com/v1/me', {
+    return fetch('https://api.spotify.com/v1/me', {
       method: 'GET',
       headers: headers
     }).then(response => {
